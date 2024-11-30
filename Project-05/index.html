@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body
+    class="bg-gradient-to-r from-black to-gray-900 flex items-center justify-center h-screen"
+  >
+<!-- Error message container -->
+<div id="error-message" class="hidden">
+  <p>No city found. Please try again!</p>
+</div>
+
+  
+    <div id="loader" class="loader-container">
+      <div class="loader">
+        <i class="fas fa-cloud-sun fa-spin text-4xl text-white"></i>
+      </div>
+    </div>
+
+
+    <div class="weather-card">
+      <div class="search-bar">
+        <input type="text" class="search-input" placeholder="Enter city name" />
+        <button class="search-button">
+          <i class="fa-solid fa-magnifying-glass" style="color: #a776a3"></i>
+        </button>
+      </div>
+      <div class="date-time">
+        <div class="date" id="current-date"></div>
+        <div class="time" id="current-time"></div>
+      </div>
+
+      <div class="weather-icon">
+        <img src="" id="weather--icon" alt="Weather Icon" />
+      </div>
+
+      <div class="flex mr-auto ml-auto">
+        <div class="temperature"></div>
+      </div>
+      <div class="flex flex-col space-x-2">
+        <div class="flex text-center ml-auto mr-auto space-x-2">
+          <i
+            class="fas fa-map-marker-alt text-xl text-white mt-auto mb-auto"
+          ></i>
+          <div class="city-name mt-auto mb-auto"></div>
+        </div>
+        <div class="date--time">Monday, November 11, 2024 at 8:08 AM</div>
+      </div>
+
+      <div class="date-time">
+        <div class="date" id="current-date"></div>
+        <div class="time" id="current-time"></div>
+      </div>
+
+      <div class="weather__info">
+        <div class="weather__card">
+          <i class="fa-solid fa-temperature-full"></i>
+          <div>
+            <p>Real Feel</p>
+            <p class="weather__realfeel feels-like"></p>
+          </div>
+        </div>
+        <div class="weather__card">
+          <i class="fa-solid fa-droplet"></i>
+          <div>
+            <p>Humidity</p>
+            <p class="weather__humidity humidity-value"></p>
+          </div>
+        </div>
+        <div class="weather__card">
+          <i class="fa-solid fa-wind"></i>
+          <div>
+            <p>Wind</p>
+            <p class="weather__wind wind-speed"></p>
+          </div>
+        </div>
+        <div class="weather__card">
+          <i class="fa-solid fa-gauge-high"></i>
+          <div>
+            <p>Pressure</p>
+            <p class="weather__pressure pressure"></p>
+          </div>
+        </div>
+      </div>
+
+    
+
+    <script src="index.js"></script>
+    <!-- <script src="i.js"></script> -->
+  </body>
+</html>
