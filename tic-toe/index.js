@@ -2,6 +2,7 @@ let boxes = document.querySelectorAll(".box");
 const reset_Btn = document.querySelector("#reset");
 let play_again = document.querySelector("#play-again");
 let teamWin = document.getElementById("winner-team");
+const isDraw = [...boxes].every((box) => box.innerText !== "");
 let turn = true;
 let winPatterns = [
   [0, 1, 2],
@@ -13,9 +14,16 @@ let winPatterns = [
   [3, 4, 5],
   [6, 7, 8],
 ];
+let currentAudio = null;
+function playMusic(result) {
+  if (currentAudio) currentAudio.pause();
+  const music =
+    result === "WIN"
+      ? "./assests/winner.mp3"
+      : "./assests/mixkit-player-losing-or-failing-2042.wav";
 
-function playMusic() {
-  new Audio("./assests/winner.mp3").play();
+  currentAudio = new Audio(music);
+  currentAudio.play();
 }
 
 function hideModal() {
@@ -24,9 +32,9 @@ function hideModal() {
 hideModal();
 reset_Btn.addEventListener("click", function (e) {
   e.preventDefault();
-  // hideModal();
   enableBtn();
 });
+
 function showModal(win) {
   teamWin.innerHTML = `"${win}"`;
   document.getElementById("winner-message").style.visibility = "visible";
@@ -48,60 +56,57 @@ const enableBtn = () => {
     e.disabled = false;
     e.innerHTML = "";
     teamWin.innerHTML = "";
+    e.classList.remove("x-move", "o-move");
     turn = true;
   });
 };
 
 boxes.forEach((box, index) => {
-  // box.innerHTML = index;
   box.addEventListener("click", function (e) {
     e.preventDefault();
     turn = !turn;
     if (turn) {
       box.innerHTML = "X";
+      box.classList.add("x-move");
     } else {
       box.innerHTML = "O";
+      box.classList.add("o-move");
     }
     box.disabled = true;
     checkWinner();
   });
 });
 const checkWinner = () => {
+  let winnerFound = false;
   for (let pattern of winPatterns) {
-    // console.log(pattern[0], pattern[1], pattern[2]);
     let position1 = boxes[pattern[0]]?.innerText;
     let position2 = boxes[pattern[1]]?.innerText;
     let position3 = boxes[pattern[2]]?.innerText;
     if (position1 != "" && position2 != "" && position3 != "") {
       if (position1 === position2 && position2 === position3) {
+        winnerFound = true;
         showModal(position1);
-        playMusic();
+        playMusic("WIN");
         disabledBtn();
+        return;
       }
     }
   }
+  const isDraw = [...boxes].every((box) => box.innerText !== "");
+  console.log(winnerFound, "winnerFound");
+  if (!winnerFound && isDraw) {
+    showModal("No one 😢 It's a Draw");
+    playMusic("DRAW");
+    disabledBtn(); // optional if you want to freeze board
+  }
 };
 
-//  login
-
 function onSignIn(googleUser) {
-  console.log(googleUser, "googleUser");
-  // Get the user's basic profile information
   const profile = googleUser.getBasicProfile();
 
-  // Get the ID, Name, and Email
   const userID = profile.getId();
   const userName = profile.getName();
   const userEmail = profile.getEmail();
 
-  // Log the user's info (or use it in your app)
-  console.log("ID: " + userID);
-  console.log("Name: " + userName);
-  console.log("Email: " + userEmail);
-
-  // Get the authentication token (optional)
   const authResponse = googleUser.getAuthResponse();
-  console.log("ID Token: " + authResponse.id_token);
-
-  // Optionally, you can send this information to your server for validation
 }
